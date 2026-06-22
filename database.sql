@@ -9,6 +9,12 @@ CREATE DATABASE IF NOT EXISTS topup_game_db
 
 USE topup_game_db;
 
+-- ===== RESET TABLES =====
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS users;
+
 -- ===== TABEL GAMES =====
 CREATE TABLE IF NOT EXISTS games (
     id          INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,12 +43,23 @@ CREATE TABLE IF NOT EXISTS products (
     FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
+-- ===== TABEL USERS =====
+CREATE TABLE IF NOT EXISTS users (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    username    VARCHAR(50) UNIQUE NOT NULL,
+    email       VARCHAR(100) UNIQUE NOT NULL,
+    password    VARCHAR(255) NOT NULL,
+    phone       VARCHAR(20)  DEFAULT NULL,
+    created_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
 -- ===== TABEL PESANAN =====
 CREATE TABLE IF NOT EXISTS orders (
     id              INT AUTO_INCREMENT PRIMARY KEY,
     order_id        VARCHAR(50) UNIQUE NOT NULL,
     game_id         INT NOT NULL,
     product_id      INT NOT NULL,
+    user_id         INT          DEFAULT NULL,
     user_game_id    VARCHAR(100) NOT NULL,
     server_id       VARCHAR(50)  DEFAULT NULL,
     payment_method  VARCHAR(50)  NOT NULL,
@@ -53,7 +70,8 @@ CREATE TABLE IF NOT EXISTS orders (
     created_at      TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
     updated_at      TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (game_id)    REFERENCES games(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (user_id)    REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
 -- ===== DATA AWAL: GAMES =====
@@ -66,16 +84,12 @@ INSERT INTO games (slug, name, category, icon, color, is_popular, sort_order) VA
 ('honkai-star-rail','Honkai Star Rail','RPG',           '🌟', '#7c3aed', 0, 6);
 
 -- ===== DATA AWAL: PRODUK MOBILE LEGENDS =====
-INSERT INTO products (game_id, name, amount, price, bonus, sort_order)
-SELECT id, name, amount, price, bonus, sort_order FROM games
-JOIN (VALUES
-    ('mobile-legends', '86 Diamonds',   86,   19000, 0, 1),
-    ('mobile-legends', '172 Diamonds',  172,  38000, 0, 2),
-    ('mobile-legends', '257 Diamonds',  257,  57000, 5, 3),
-    ('mobile-legends', '514 Diamonds',  514, 114000, 10, 4),
-    ('mobile-legends', '1412 Diamonds', 1412, 304000, 20, 5)
-) AS p(slug, name, amount, price, bonus, sort_order)
-ON games.slug = p.slug;
+INSERT INTO products (game_id, name, amount, price, bonus, sort_order) VALUES
+((SELECT id FROM games WHERE slug = 'mobile-legends' LIMIT 1), '86 Diamonds',   86,   19000, 0, 1),
+((SELECT id FROM games WHERE slug = 'mobile-legends' LIMIT 1), '172 Diamonds',  172,  38000, 0, 2),
+((SELECT id FROM games WHERE slug = 'mobile-legends' LIMIT 1), '257 Diamonds',  257,  57000, 5, 3),
+((SELECT id FROM games WHERE slug = 'mobile-legends' LIMIT 1), '514 Diamonds',  514, 114000, 10, 4),
+((SELECT id FROM games WHERE slug = 'mobile-legends' LIMIT 1), '1412 Diamonds', 1412, 304000, 20, 5);
 
 -- ===== INDEX =====
 CREATE INDEX idx_orders_order_id ON orders(order_id);

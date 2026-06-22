@@ -36,23 +36,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $orderId = strtoupper(sanitize($_POST['order_id'] ?? ''));
     if (empty($orderId)) {
         $error = 'Masukkan ID pesanan terlebih dahulu.';
-    } elseif (isset($demoOrders[$orderId])) {
-        $result = $demoOrders[$orderId];
-    } elseif (isset($_SESSION['order']) && $_SESSION['order']['order_id'] === $orderId) {
-        $o = $_SESSION['order'];
-        $result = [
-            'order_id'   => $o['order_id'],
-            'game_name'  => $o['game']['name'],
-            'game_icon'  => $o['game']['icon'],
-            'product'    => $o['product']['name'],
-            'user_id'    => $o['user_id'],
-            'payment'    => strtoupper(str_replace('_', ' ', $o['payment'])),
-            'total'      => $o['total'],
-            'status'     => $o['status'],
-            'created_at' => $o['created_at'],
-        ];
     } else {
-        $error = 'ID pesanan tidak ditemukan. Pastikan ID sudah benar.';
+        // Cek database terlebih dahulu
+        $db = getDB();
+        $dbFound = false;
+        if ($db) {
+            $orderIdEscaped = $db->real_escape_string($orderId);
+            $query = "SELECT o.*, g.name AS game_name, g.icon AS game_icon, p.name AS product_name 
+                      FROM orders o
+                      LEFT JOIN games g ON o.game_id = g.id
+                      LEFT JOIN products p ON o.product_id = p.id
+                      WHERE o.order_id = '$orderIdEscaped' LIMIT 1";
+            $res = $db->query($query);
+            if ($res && $res->num_rows > 0) {
+                $row = $res->fetch_assoc();
+                $result = [
+                    'order_id'   => $row['order_id'],
+                    'game_name'  => $row['game_name'] ?? 'Game Tidak Diketahui',
+                    'game_icon'  => $row['game_icon'] ?? '🎮',
+                    'product'    => $row['product_name'] ?? 'Produk Tidak Diketahui',
+                    'user_id'    => $row['user_game_id'] . ($row['server_id'] ? ' (' . $row['server_id'] . ')' : ''),
+                    'payment'    => strtoupper(str_replace('_', ' ', $row['payment_method'])),
+                    'total'      => (int)$row['total_price'],
+                    'status'     => $row['status'],
+                    'created_at' => date('d M Y, H:i', strtotime($row['created_at'])),
+                ];
+                $dbFound = true;
+            }
+        }
+        
+        if (!$dbFound) {
+            if (isset($demoOrders[$orderId])) {
+                $result = $demoOrders[$orderId];
+            } elseif (isset($_SESSION['order']) && $_SESSION['order']['order_id'] === $orderId) {
+                $o = $_SESSION['order'];
+                $result = [
+                    'order_id'   => $o['order_id'],
+                    'game_name'  => $o['game']['name'],
+                    'game_icon'  => $o['game']['icon'],
+                    'product'    => $o['product']['name'],
+                    'user_id'    => $o['user_id'] . (!empty($o['server_id']) ? ' (' . $o['server_id'] . ')' : ''),
+                    'payment'    => strtoupper(str_replace('_', ' ', $o['payment'])),
+                    'total'      => $o['total'],
+                    'status'     => $o['status'],
+                    'created_at' => $o['created_at'],
+                ];
+            } else {
+                $error = 'ID pesanan tidak ditemukan. Pastikan ID sudah benar.';
+            }
+        }
     }
 }
 ?>

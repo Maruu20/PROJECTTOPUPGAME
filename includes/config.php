@@ -25,3 +25,10 @@ date_default_timezone_set('Asia/Jakarta');
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// =============================================
+// KREDENSIAL ADMIN
+// =============================================
+define('ADMIN_USER', 'admin');
+define('ADMIN_PASS', 'admin123');
+

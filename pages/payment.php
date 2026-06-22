@@ -12,11 +12,37 @@ $pageTitle = 'Konfirmasi Pembayaran';
 
 // Handle konfirmasi pembayaran
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
-    // Di sini normalnya ada integrasi payment gateway
-    // Untuk demo: simulasikan pembayaran berhasil
     $_SESSION['order']['status'] = 'success';
+    
+    // Simpan ke database jika tersedia
+    $db = getDB();
+    if ($db) {
+        $order = $_SESSION['order'];
+        $orderId = $db->real_escape_string($order['order_id']);
+        $gameId = (int)$order['game']['id'];
+        $productId = (int)$order['product']['id'];
+        $userIdValue = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 'NULL';
+        $userGameId = $db->real_escape_string($order['user_id']);
+        $serverId = !empty($order['server_id']) ? "'" . $db->real_escape_string($order['server_id']) . "'" : "NULL";
+        $paymentMethod = $db->real_escape_string($order['payment']);
+        $totalPrice = (int)$order['total'];
+        $status = 'success';
+
+        // Periksa apakah game_id dan product_id ada di DB (mencegah FK violation jika data dummy/mismatch)
+        $checkGame = $db->query("SELECT id FROM games WHERE id = $gameId");
+        $checkProduct = $db->query("SELECT id FROM products WHERE id = $productId");
+        
+        if ($checkGame && $checkGame->num_rows > 0 && $checkProduct && $checkProduct->num_rows > 0) {
+            $query = "INSERT INTO orders (order_id, game_id, product_id, user_id, user_game_id, server_id, payment_method, total_price, status) 
+                      VALUES ('$orderId', $gameId, $productId, $userIdValue, '$userGameId', $serverId, '$paymentMethod', $totalPrice, '$status')
+                      ON DUPLICATE KEY UPDATE status = '$status', user_id = $userIdValue";
+            $db->query($query);
+        }
+    }
+    
     redirect(APP_URL . '/pages/success.php');
 }
+
 ?>
 <?php include __DIR__ . '/../includes/header.php'; ?>
 
