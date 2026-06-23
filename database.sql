@@ -81,7 +81,8 @@ INSERT INTO games (slug, name, category, icon, color, is_popular, sort_order) VA
 ('pubg-mobile',    'PUBG Mobile',    'Battle Royale',  '🎯', '#c9a227', 1, 3),
 ('genshin-impact', 'Genshin Impact', 'RPG',            '✨', '#6b5de4', 1, 4),
 ('valorant',       'Valorant',       'FPS',            '⚡', '#ff4655', 0, 5),
-('honkai-star-rail','Honkai Star Rail','RPG',           '🌟', '#7c3aed', 0, 6);
+('honkai-star-rail','Honkai Star Rail','RPG',           '🌟', '#7c3aed', 0, 6),
+('lokapala',       'Lokapala',       'Game Lokal',      '🛡️', '#10b981', 0, 7);
 
 -- ===== DATA AWAL: PRODUK MOBILE LEGENDS =====
 INSERT INTO products (game_id, name, amount, price, bonus, sort_order) VALUES

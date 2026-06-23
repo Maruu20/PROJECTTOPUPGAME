@@ -125,6 +125,17 @@ function getGames($onlyActive = true) {
             'is_active'=> true,
             'sort_order'=> 6,
         ],
+        [
+            'id'       => 7,
+            'slug'     => 'lokapala',
+            'name'     => 'Lokapala',
+            'category' => 'Game Lokal',
+            'icon'     => '🛡️',
+            'color'    => '#10b981',
+            'popular'  => false,
+            'is_active'=> true,
+            'sort_order'=> 7,
+        ],
     ];
     if ($onlyActive) {
         return array_filter($staticGames, function($g) { return $g['is_active']; });

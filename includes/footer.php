@@ -50,6 +50,22 @@
     </div>
 </footer>
 
+<!-- ===== FLOATING COOKIE CONSENT BANNER ===== -->
+<div class="cookie-banner" id="cookieBanner" style="display: none;">
+    <div class="cookie-header">
+        <span class="cookie-header-icon">🍪</span>
+        <h4 class="cookie-header-title">Persetujuan Cookie</h4>
+    </div>
+    <div class="cookie-body">
+        Kami menggunakan cookie untuk meningkatkan pengalaman Anda di GameTop. Dengan melanjutkan, Anda menyetujui penggunaan cookie kami sesuai dengan <a href="#">Kebijakan Privasi</a> kami.
+    </div>
+    <div class="cookie-actions">
+        <button class="cookie-btn cookie-btn-settings" id="cookieSettingsBtn">Setelan</button>
+        <button class="cookie-btn cookie-btn-decline" id="cookieDeclineBtn">Tolak Semua</button>
+        <button class="cookie-btn cookie-btn-allow" id="cookieAllowBtn">Setuju Semua</button>
+    </div>
+</div>
+
 <script src="<?= APP_URL ?>/assets/js/main.js"></script>
 </body>
 </html>
