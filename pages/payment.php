@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
                 </p>
                 <div style="background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.3);
                             border-radius: var(--radius-sm); padding: 12px 20px; margin-top: 16px;
-                            font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800;
+                            font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800;
                             color: var(--amber);" id="countdown">15:00</div>
             </div>
 
@@ -106,14 +106,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
                 'transfer_bank' => [
                     'Buka aplikasi mobile banking kamu.',
                     'Pilih menu Transfer → ke Rekening Bank.',
-                    'Masukkan nomor rekening: <strong>1234-5678-9012</strong> (BCA a/n GameTop Indonesia).',
+                    'Masukkan nomor rekening: <strong>1234-5678-9012</strong> (BCA a/n ' . APP_NAME . ' Indonesia).',
                     'Nominal transfer: <strong>' . formatRupiah($order['total']) . '</strong>.',
                     'Simpan bukti transfer dan klik tombol "Konfirmasi" di bawah.',
                 ],
                 'ewallet' => [
                     'Buka aplikasi e-wallet kamu (GoPay / OVO / DANA / ShopeePay).',
                     'Pilih menu Transfer atau Kirim Uang.',
-                    'Nomor tujuan: <strong>0812-3456-7890</strong> (a/n GameTop).',
+                    'Nomor tujuan: <strong>0812-3456-7890</strong> (a/n ' . APP_NAME . ').',
                     'Nominal: <strong>' . formatRupiah($order['total']) . '</strong>.',
                     'Screenshot bukti transfer dan klik "Konfirmasi" di bawah.',
                 ],

@@ -71,7 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <span>›</span>
             <span><?= htmlspecialchars($game['name']) ?></span>
         </div>
-        <h1><?= $game['icon'] ?> Top-Up <?= htmlspecialchars($game['name']) ?></h1>
+        <h1>
+            <?php 
+            if (preg_match('/\.(jpg|jpeg|png|gif|webp|svg)$/i', $game['icon']) || strpos($game['icon'], '/') === 0) {
+                echo '<img src="' . APP_URL . $game['icon'] . '" alt="' . htmlspecialchars($game['name']) . '" style="width:36px;height:36px;border-radius:8px;object-fit:cover;vertical-align:middle;margin-right:8px;">';
+            } else {
+                echo $game['icon'];
+            }
+            ?>
+            Top-Up <?= htmlspecialchars($game['name']) ?>
+        </h1>
         <p>Isi User ID dan pilih nominal. Proses instan setelah pembayaran terkonfirmasi.</p>
     </div>
 </div>
@@ -159,7 +168,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="summary-card">
                         <h3>📋 Ringkasan Pesanan</h3>
                         <div class="summary-game">
-                            <span class="summary-game-icon"><?= $game['icon'] ?></span>
+                            <?php 
+                            if (preg_match('/\.(jpg|jpeg|png|gif|webp|svg)$/i', $game['icon']) || strpos($game['icon'], '/') === 0) {
+                                echo '<img src="' . APP_URL . $game['icon'] . '" alt="' . htmlspecialchars($game['name']) . '" style="width:40px;height:40px;border-radius:10px;object-fit:cover;">';
+                            } else {
+                                echo '<span class="summary-game-icon">' . $game['icon'] . '</span>';
+                            }
+                            ?>
                             <div>
                                 <div class="summary-game-name"><?= htmlspecialchars($game['name']) ?></div>
                                 <div class="summary-game-cat"><?= htmlspecialchars($game['category']) ?></div>

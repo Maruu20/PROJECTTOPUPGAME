@@ -10,7 +10,7 @@ define('DB_NAME', 'topup_game_db');
 // =============================================
 // KONFIGURASI APLIKASI
 // =============================================
-define('APP_NAME', 'GameTop');
+define('APP_NAME', 'MariTopup');
 define('APP_URL', 'http://localhost/topup-game');
 define('APP_VERSION', '1.0.0');
 

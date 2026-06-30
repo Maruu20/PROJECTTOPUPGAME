@@ -34,7 +34,7 @@ include __DIR__ . '/../includes/header.php';
         <div class="topup-card" style="padding: 40px 32px; border-radius: var(--radius); box-shadow: var(--shadow-lg);">
             <div style="text-align: center; margin-bottom: 28px;">
                 <span style="font-size: 2.5rem;">⚡</span>
-                <h1 style="font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; margin-top: 12px; margin-bottom: 8px;">Masuk Akun</h1>
+                <h1 style="font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 800; margin-top: 12px; margin-bottom: 8px;">Masuk Akun</h1>
                 <p style="color: var(--text-muted); font-size: 0.85rem;">Akses riwayat transaksi dan kemudahan top-up</p>
             </div>
 

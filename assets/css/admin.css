@@ -33,7 +33,7 @@
 body.admin-body {
     background-color: var(--bg-admin);
     color: var(--text-white);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -99,7 +99,7 @@ body.admin-body {
 }
 
 .login-header h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 800;
     font-size: 1.8rem;
     margin-bottom: 8px;
@@ -132,6 +132,15 @@ body.admin-body {
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 24px;
 }
+.admin-logo-img {
+    height: 38px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 50%;
+    transition: var(--transition);
+}
 
 .admin-logo .logo-icon {
     font-size: 1.6rem;
@@ -139,7 +148,7 @@ body.admin-body {
 }
 
 .admin-logo .logo-text {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 800;
     font-size: 1.25rem;
     color: var(--neon-cyan);
@@ -200,7 +209,7 @@ body.admin-body {
 }
 
 .admin-header h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 800;
     font-size: 2rem;
     margin: 0;
@@ -255,7 +264,7 @@ body.admin-body {
 }
 
 .stat-value {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.8rem;
     font-weight: 800;
     margin-top: 6px;
@@ -302,7 +311,7 @@ body.admin-body {
 }
 
 .admin-card-header h2 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0;
@@ -316,7 +325,7 @@ body.admin-body {
     gap: 8px;
     padding: 10px 18px;
     border-radius: var(--radius-sm);
-    font-family: 'Syne', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     font-size: 0.85rem;
     cursor: pointer;
@@ -563,6 +572,9 @@ body.admin-body {
         padding: 0;
         justify-content: center;
         border-bottom: none;
+    }
+    .admin-sidebar .admin-logo .admin-logo-img {
+        max-width: 40px;
     }
     .admin-sidebar .admin-nav {
         padding: 0 8px;

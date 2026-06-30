@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 emptyState.style.color = 'var(--text-muted)';
                 emptyState.innerHTML = `
                     <div style="font-size: 3rem; margin-bottom: 12px;">🔍</div>
-                    <h3 style="font-family: 'Syne', sans-serif; font-weight: 700; color: #fff; margin-bottom: 8px;">Game Tidak Ditemukan</h3>
+                    <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #fff; margin-bottom: 8px;">Game Tidak Ditemukan</h3>
                     <p>Coba gunakan kata kunci lain atau ubah filter kategori Anda.</p>
                 `;
                 gamesGrid.appendChild(emptyState);
@@ -352,4 +352,88 @@ document.addEventListener('DOMContentLoaded', function () {
             el.textContent = current.toLocaleString('id-ID') + suffix;
         }, 30);
     });
+
+    // --- Premium Banner Slider ---
+    const sliderContainer = document.querySelector('.banner-slider-container');
+    if (sliderContainer) {
+        const sliderWrapper = sliderContainer.querySelector('.banner-slider-wrapper');
+        const slides = sliderContainer.querySelectorAll('.banner-slide');
+        const dots = sliderContainer.querySelectorAll('.banner-slider-dot');
+        const prevBtn = sliderContainer.querySelector('.banner-slider-arrow.prev');
+        const nextBtn = sliderContainer.querySelector('.banner-slider-arrow.next');
+        
+        let activeIdx = 0;
+        let slideInterval = null;
+        const intervalTime = 5000; // 5 seconds
+        
+        function updateSlider(index) {
+            if (slides.length === 0) return;
+            
+            // Wrap index
+            if (index < 0) {
+                activeIdx = slides.length - 1;
+            } else if (index >= slides.length) {
+                activeIdx = 0;
+            } else {
+                activeIdx = index;
+            }
+            
+            // Translate wrapper
+            if (sliderWrapper) {
+                sliderWrapper.style.transform = `translateX(-${activeIdx * 100}%)`;
+            }
+            
+            // Update dots
+            dots.forEach((dot, idx) => {
+                if (idx === activeIdx) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+        
+        function startAutoPlay() {
+            stopAutoPlay();
+            slideInterval = setInterval(() => {
+                updateSlider(activeIdx + 1);
+            }, intervalTime);
+        }
+        
+        function stopAutoPlay() {
+            if (slideInterval) {
+                clearInterval(slideInterval);
+                slideInterval = null;
+            }
+        }
+        
+        // Event Listeners
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                updateSlider(activeIdx - 1);
+                startAutoPlay();
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                updateSlider(activeIdx + 1);
+                startAutoPlay();
+            });
+        }
+        
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', function() {
+                updateSlider(idx);
+                startAutoPlay();
+            });
+        });
+        
+        sliderContainer.addEventListener('mouseenter', stopAutoPlay);
+        sliderContainer.addEventListener('mouseleave', startAutoPlay);
+        
+        // Initialize
+        updateSlider(0);
+        startAutoPlay();
+    }
 });

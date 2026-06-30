@@ -36,6 +36,13 @@ $recentOrders = getOrders(5);
         </div>
         <div class="stat-icon-wrapper stat-icon-green">💰</div>
     </div>
+    <div class="stat-card">
+        <div>
+            <div class="stat-label">Total Banner</div>
+            <div class="stat-value"><?= $stats['total_banners'] ?></div>
+        </div>
+        <div class="stat-icon-wrapper stat-icon-purple" style="background: rgba(189, 0, 255, 0.1); color: var(--neon-purple);">🖼️</div>
+    </div>
 </div>
 
 <!-- ===== PESANAN TERBARU ===== -->

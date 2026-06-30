@@ -64,7 +64,7 @@ function getGames($onlyActive = true) {
             'slug'     => 'mobile-legends',
             'name'     => 'Mobile Legends',
             'category' => 'MOBA',
-            'icon'     => '🗡️',
+            'icon'     => '/assets/images/mlbb.jpeg',
             'color'    => '#1a73e8',
             'popular'  => true,
             'is_active'=> true,
@@ -75,7 +75,7 @@ function getGames($onlyActive = true) {
             'slug'     => 'free-fire',
             'name'     => 'Free Fire',
             'category' => 'Battle Royale',
-            'icon'     => '🔥',
+            'icon'     => '/assets/images/free-fire.jpeg',
             'color'    => '#f4a018',
             'popular'  => true,
             'is_active'=> true,
@@ -86,7 +86,7 @@ function getGames($onlyActive = true) {
             'slug'     => 'pubg-mobile',
             'name'     => 'PUBG Mobile',
             'category' => 'Battle Royale',
-            'icon'     => '🎯',
+            'icon'     => '/assets/images/pubg.jpeg',
             'color'    => '#c9a227',
             'popular'  => true,
             'is_active'=> true,
@@ -97,7 +97,7 @@ function getGames($onlyActive = true) {
             'slug'     => 'genshin-impact',
             'name'     => 'Genshin Impact',
             'category' => 'RPG',
-            'icon'     => '✨',
+            'icon'     => '/assets/images/genshin.jpeg',
             'color'    => '#6b5de4',
             'popular'  => true,
             'is_active'=> true,
@@ -108,7 +108,7 @@ function getGames($onlyActive = true) {
             'slug'     => 'valorant',
             'name'     => 'Valorant',
             'category' => 'FPS',
-            'icon'     => '⚡',
+            'icon'     => '/assets/images/valorant.jpeg',
             'color'    => '#ff4655',
             'popular'  => false,
             'is_active'=> true,
@@ -119,22 +119,11 @@ function getGames($onlyActive = true) {
             'slug'     => 'honkai-star-rail',
             'name'     => 'Honkai Star Rail',
             'category' => 'RPG',
-            'icon'     => '🌟',
+            'icon'     => '/assets/images/honkai.jpeg',
             'color'    => '#7c3aed',
             'popular'  => false,
             'is_active'=> true,
             'sort_order'=> 6,
-        ],
-        [
-            'id'       => 7,
-            'slug'     => 'lokapala',
-            'name'     => 'Lokapala',
-            'category' => 'Game Lokal',
-            'icon'     => '🛡️',
-            'color'    => '#10b981',
-            'popular'  => false,
-            'is_active'=> true,
-            'sort_order'=> 7,
         ],
     ];
     if ($onlyActive) {
@@ -384,7 +373,8 @@ function getAdminStats() {
         'total_games' => 0,
         'total_products' => 0,
         'total_orders' => 0,
-        'total_revenue' => 0
+        'total_revenue' => 0,
+        'total_banners' => 0
     ];
     
     if ($db) {
@@ -406,12 +396,17 @@ function getAdminStats() {
             $sum = $res->fetch_assoc()['sum'];
             $stats['total_revenue'] = $sum ? (int)$sum : 0;
         }
+        
+        // Total Banners
+        $res = $db->query("SELECT COUNT(*) AS count FROM banners");
+        if ($res) $stats['total_banners'] = (int)$res->fetch_assoc()['count'];
     } else {
         // Dummy stats fallback
         $stats['total_games'] = count(getGames(false));
         $stats['total_products'] = 34;
         $stats['total_orders'] = 2;
         $stats['total_revenue'] = 57000;
+        $stats['total_banners'] = count(getBanners(false));
     }
     return $stats;
 }
@@ -499,12 +494,144 @@ function getUserOrders($userId) {
                   ORDER BY o.created_at DESC";
         $result = $db->query($query);
         if ($result && $result->num_rows > 0) {
+            $row = null;
             while ($row = $result->fetch_assoc()) {
                 $orders[] = $row;
             }
         }
     }
     return $orders;
+}
+
+// =============================================
+// HELPER BANNERS (CRUD & RETRIEVAL)
+// =============================================
+function getBanners($onlyActive = true) {
+    $db = getDB();
+    if ($db) {
+        $where = $onlyActive ? "WHERE is_active = 1" : "";
+        $query = "SELECT * FROM banners $where ORDER BY sort_order ASC, id DESC";
+        $result = $db->query($query);
+        if ($result && $result->num_rows > 0) {
+            $banners = [];
+            while ($row = $result->fetch_assoc()) {
+                $banners[] = $row;
+            }
+            return $banners;
+        }
+    }
+    // Fallback static array
+    $fallbackBanners = [
+        [
+            'id' => 1,
+            'title' => 'Football Fever 2026',
+            'description' => 'Top-up game favoritmu selama event dan dapatkan cashback instan hingga 50%!',
+            'image_path' => null,
+            'graphic_icon' => '🏆',
+            'badge_text' => '⚽ Event Terbatas',
+            'button_link' => '#',
+            'button_text' => 'Info Selengkapnya',
+            'sort_order' => 1,
+            'is_active' => 1
+        ],
+        [
+            'id' => 2,
+            'title' => 'Promo Akhir Bulan',
+            'description' => 'Nikmati diskon s/d 20% untuk pembelian Diamond Mobile Legends & UC PUBG Mobile.',
+            'image_path' => null,
+            'graphic_icon' => '💎',
+            'badge_text' => '🔥 Diskon Kilat',
+            'button_link' => '#',
+            'button_text' => 'Info Selengkapnya',
+            'sort_order' => 2,
+            'is_active' => 1
+        ],
+        [
+            'id' => 3,
+            'title' => 'Genshin Impact Update 5.0',
+            'description' => 'Petualangan baru menanti! Top-up Primogem instan sekarang dan dapatkan bonus tambahan.',
+            'image_path' => null,
+            'graphic_icon' => '✨',
+            'badge_text' => '🎮 Rilis Baru',
+            'button_link' => '#',
+            'button_text' => 'Info Selengkapnya',
+            'sort_order' => 3,
+            'is_active' => 1
+        ]
+    ];
+    if ($onlyActive) {
+        return array_filter($fallbackBanners, function($b) { return $b['is_active'] == 1; });
+    }
+    return $fallbackBanners;
+}
+
+function getBannerById($id) {
+    $db = getDB();
+    if ($db) {
+        $id = (int)$id;
+        $result = $db->query("SELECT * FROM banners WHERE id = $id");
+        if ($result && $result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+    }
+    return null;
+}
+
+function createBanner($title, $description, $image_path, $graphic_icon, $badge_text, $button_link, $button_text, $sort_order, $is_active) {
+    $db = getDB();
+    if (!$db) return false;
+    
+    $title = sanitize($title);
+    $description = sanitize($description);
+    $image_path = sanitize($image_path);
+    $graphic_icon = sanitize($graphic_icon);
+    $badge_text = sanitize($badge_text);
+    $button_link = sanitize($button_link);
+    $button_text = sanitize($button_text);
+    $sort_order = (int)$sort_order;
+    $is_active = (int)$is_active;
+    
+    $stmt = $db->prepare("INSERT INTO banners (title, description, image_path, graphic_icon, badge_text, button_link, button_text, sort_order, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssiii", $title, $description, $image_path, $graphic_icon, $badge_text, $button_link, $button_text, $sort_order, $is_active);
+    return $stmt->execute();
+}
+
+function updateBanner($id, $title, $description, $image_path, $graphic_icon, $badge_text, $button_link, $button_text, $sort_order, $is_active) {
+    $db = getDB();
+    if (!$db) return false;
+    
+    $id = (int)$id;
+    $title = sanitize($title);
+    $description = sanitize($description);
+    $image_path = sanitize($image_path);
+    $graphic_icon = sanitize($graphic_icon);
+    $badge_text = sanitize($badge_text);
+    $button_link = sanitize($button_link);
+    $button_text = sanitize($button_text);
+    $sort_order = (int)$sort_order;
+    $is_active = (int)$is_active;
+    
+    $stmt = $db->prepare("UPDATE banners SET title = ?, description = ?, image_path = ?, graphic_icon = ?, badge_text = ?, button_link = ?, button_text = ?, sort_order = ?, is_active = ? WHERE id = ?");
+    $stmt->bind_param("ssssssiiii", $title, $description, $image_path, $graphic_icon, $badge_text, $button_link, $button_text, $sort_order, $is_active, $id);
+    return $stmt->execute();
+}
+
+function deleteBanner($id) {
+    $db = getDB();
+    if (!$db) return false;
+    
+    $id = (int)$id;
+    
+    // Delete file if exists
+    $banner = getBannerById($id);
+    if ($banner && !empty($banner['image_path'])) {
+        $fullPath = __DIR__ . '/../' . $banner['image_path'];
+        if (file_exists($fullPath)) {
+            @unlink($fullPath);
+        }
+    }
+    
+    return $db->query("DELETE FROM banners WHERE id = $id");
 }
 
 

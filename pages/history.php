@@ -47,14 +47,14 @@ include __DIR__ . '/../includes/header.php';
                     <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem;">
                         <thead>
                             <tr style="border-bottom: 1px solid var(--border); color: var(--text-dim);">
-                                <th style="padding: 12px 16px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">ID Pesanan</th>
-                                <th style="padding: 12px 16px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Game & Nominal</th>
-                                <th style="padding: 12px 16px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">User ID</th>
-                                <th style="padding: 12px 16px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Metode</th>
-                                <th style="padding: 12px 16px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Total</th>
-                                <th style="padding: 12px 16px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Tanggal</th>
-                                <th style="padding: 12px 16px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Status</th>
-                                <th style="padding: 12px 16px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; text-align: center;">Detail</th>
+                                <th style="padding: 12px 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">ID Pesanan</th>
+                                <th style="padding: 12px 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Game & Nominal</th>
+                                <th style="padding: 12px 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">User ID</th>
+                                <th style="padding: 12px 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Metode</th>
+                                <th style="padding: 12px 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Total</th>
+                                <th style="padding: 12px 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Tanggal</th>
+                                <th style="padding: 12px 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase;">Status</th>
+                                <th style="padding: 12px 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; text-align: center;">Detail</th>
                             </tr>
                         </thead>
                         <tbody>

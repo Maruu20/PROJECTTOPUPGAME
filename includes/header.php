@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($pageTitle) ? $pageTitle . ' — ' . APP_NAME : APP_NAME . ' | Top-Up Game Terpercaya' ?></title>
     <meta name="description" content="Top-up game terpercaya, cepat, dan murah. Mobile Legends, Free Fire, PUBG, Genshin Impact dan masih banyak lagi.">
-    <link rel="stylesheet" href="<?= APP_URL ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/assets/css/style.css?v=<?= APP_VERSION ?>.1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         .nav-auth-desktop { display: flex; align-items: center; gap: 16px; margin-left: 12px; }
         @media (max-width: 640px) {
@@ -21,7 +21,7 @@
 <nav class="navbar">
     <div class="container nav-inner">
         <a href="<?= APP_URL ?>/index.php" class="logo">
-            <span class="logo-icon">⚡</span>
+            <img src="<?= APP_URL ?>/assets/images/maritopup-logo.png" alt="<?= APP_NAME ?> Logo" style="height: 38px; width: 38px; object-fit: cover; border-radius: 50%; flex-shrink: 0; display: block;">
             <span class="logo-text"><?= APP_NAME ?></span>
         </a>
         <ul class="nav-links">

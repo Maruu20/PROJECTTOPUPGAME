@@ -15,16 +15,16 @@ $activePage = basename($_SERVER['PHP_SELF']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($adminTitle) ? $adminTitle . ' | ' . APP_NAME . ' Admin' : APP_NAME . ' Panel Admin' ?></title>
-    <link rel="stylesheet" href="<?= APP_URL ?>/assets/css/admin.css">
+    <link rel="stylesheet" href="<?= APP_URL ?>/assets/css/admin.css?v=1.0.1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body class="admin-body">
 
     <!-- ===== SIDEBAR ===== -->
     <aside class="admin-sidebar">
         <div class="admin-logo">
-            <span class="logo-icon">⚡</span>
+            <img src="<?= APP_URL ?>/assets/images/maritopup-logo.png" alt="<?= APP_NAME ?> Admin" style="height: 38px; width: 38px; object-fit: cover; border-radius: 50%; flex-shrink: 0; display: block;">
             <span class="logo-text"><?= APP_NAME ?> Admin</span>
         </div>
         <ul class="admin-nav">
@@ -44,6 +44,12 @@ $activePage = basename($_SERVER['PHP_SELF']);
                 <a href="<?= APP_URL ?>/admin/products.php">
                     <span>💎</span>
                     <span>Kelola Produk</span>
+                </a>
+            </li>
+            <li class="admin-nav-item <?= $activePage === 'banners.php' ? 'active' : '' ?>">
+                <a href="<?= APP_URL ?>/admin/banners.php">
+                    <span>🖼️</span>
+                    <span>Kelola Banner</span>
                 </a>
             </li>
             <li class="admin-nav-item <?= $activePage === 'orders.php' ? 'active' : '' ?>">

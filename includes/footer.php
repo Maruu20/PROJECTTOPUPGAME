@@ -4,7 +4,7 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <a href="<?= APP_URL ?>/index.php" class="logo">
-                    <span class="logo-icon">⚡</span>
+                    <img src="<?= APP_URL ?>/assets/images/maritopup-logo.png" alt="<?= APP_NAME ?> Logo" style="height: 38px; width: 38px; object-fit: cover; border-radius: 50%; flex-shrink: 0; display: block;">
                     <span class="logo-text"><?= APP_NAME ?></span>
                 </a>
                 <p>Platform top-up game terpercaya di Indonesia. Proses cepat, harga terjangkau, layanan 24 jam.</p>
@@ -57,7 +57,7 @@
         <h4 class="cookie-header-title">Persetujuan Cookie</h4>
     </div>
     <div class="cookie-body">
-        Kami menggunakan cookie untuk meningkatkan pengalaman Anda di GameTop. Dengan melanjutkan, Anda menyetujui penggunaan cookie kami sesuai dengan <a href="#">Kebijakan Privasi</a> kami.
+        Kami menggunakan cookie untuk meningkatkan pengalaman Anda di <?= APP_NAME ?>. Dengan melanjutkan, Anda menyetujui penggunaan cookie kami sesuai dengan <a href="#">Kebijakan Privasi</a> kami.
     </div>
     <div class="cookie-actions">
         <button class="cookie-btn cookie-btn-settings" id="cookieSettingsBtn">Setelan</button>

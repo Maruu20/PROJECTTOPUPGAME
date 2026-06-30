@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS games (
     slug        VARCHAR(100) UNIQUE NOT NULL,
     name        VARCHAR(150) NOT NULL,
     category    VARCHAR(80)  NOT NULL,
-    icon        VARCHAR(10)  DEFAULT '🎮',
+    icon        VARCHAR(255) DEFAULT '🎮',
     color       VARCHAR(20)  DEFAULT '#00e5ff',
     is_popular  TINYINT(1)   DEFAULT 0,
     is_active   TINYINT(1)   DEFAULT 1,
@@ -76,13 +76,12 @@ CREATE TABLE IF NOT EXISTS orders (
 
 -- ===== DATA AWAL: GAMES =====
 INSERT INTO games (slug, name, category, icon, color, is_popular, sort_order) VALUES
-('mobile-legends', 'Mobile Legends', 'MOBA',          '🗡️', '#1a73e8', 1, 1),
-('free-fire',      'Free Fire',      'Battle Royale',  '🔥', '#f4a018', 1, 2),
-('pubg-mobile',    'PUBG Mobile',    'Battle Royale',  '🎯', '#c9a227', 1, 3),
-('genshin-impact', 'Genshin Impact', 'RPG',            '✨', '#6b5de4', 1, 4),
-('valorant',       'Valorant',       'FPS',            '⚡', '#ff4655', 0, 5),
-('honkai-star-rail','Honkai Star Rail','RPG',           '🌟', '#7c3aed', 0, 6),
-('lokapala',       'Lokapala',       'Game Lokal',      '🛡️', '#10b981', 0, 7);
+('mobile-legends', 'Mobile Legends', 'MOBA',          '/assets/images/mlbb.jpeg', '#1a73e8', 1, 1),
+('free-fire',      'Free Fire',      'Battle Royale',  '/assets/images/free-fire.jpeg', '#f4a018', 1, 2),
+('pubg-mobile',    'PUBG Mobile',    'Battle Royale',  '/assets/images/pubg.jpeg', '#c9a227', 1, 3),
+('genshin-impact', 'Genshin Impact', 'RPG',            '/assets/images/genshin.jpeg', '#6b5de4', 1, 4),
+('valorant',       'Valorant',       'FPS',            '/assets/images/valorant.jpeg', '#ff4655', 0, 5),
+('honkai-star-rail','Honkai Star Rail','RPG',           '/assets/images/honkai.jpeg', '#7c3aed', 0, 6);
 
 -- ===== DATA AWAL: PRODUK MOBILE LEGENDS =====
 INSERT INTO products (game_id, name, amount, price, bonus, sort_order) VALUES
@@ -96,3 +95,24 @@ INSERT INTO products (game_id, name, amount, price, bonus, sort_order) VALUES
 CREATE INDEX idx_orders_order_id ON orders(order_id);
 CREATE INDEX idx_orders_status   ON orders(status);
 CREATE INDEX idx_products_game   ON products(game_id);
+
+-- ===== TABEL BANNERS (PROMO & NEWS SLIDER) =====
+CREATE TABLE IF NOT EXISTS banners (
+    id           INT AUTO_INCREMENT PRIMARY KEY,
+    title        VARCHAR(255) NOT NULL,
+    description  TEXT NOT NULL,
+    image_path   VARCHAR(255) DEFAULT NULL,
+    graphic_icon VARCHAR(50)  DEFAULT '🏆',
+    badge_text   VARCHAR(100) DEFAULT 'Promo',
+    button_link  VARCHAR(255) DEFAULT '#',
+    button_text  VARCHAR(100) DEFAULT 'Info Selengkapnya',
+    sort_order   INT          DEFAULT 0,
+    is_active    TINYINT(1)   DEFAULT 1,
+    created_at   TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- ===== DATA AWAL: BANNERS =====
+INSERT INTO banners (title, description, badge_text, graphic_icon, button_link, sort_order) VALUES
+('Football Fever 2026', 'Top-up game favoritmu selama event dan dapatkan cashback instan hingga 50%!', '⚽ Event Terbatas', '🏆', '#', 1),
+('Promo Akhir Bulan', 'Nikmati diskon s/d 20% untuk pembelian Diamond Mobile Legends & UC PUBG Mobile.', '🔥 Diskon Kilat', '💎', '#', 2),
+('Genshin Impact Update 5.0', 'Petualangan baru menanti! Top-up Primogem instan sekarang dan dapatkan bonus tambahan.', '🎮 Rilis Baru', '✨', '#', 3);

@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/functions.php';
 
 $pageTitle = 'Semua Game';
 $games = getGames();
+$banners = getBanners();
 ?>
 <?php include __DIR__ . '/../includes/header.php'; ?>
 
@@ -23,27 +24,59 @@ $games = getGames();
     <div class="container">
         
         <!-- ===== PROMO BANNER ===== -->
-        <div class="promo-banner">
-            <div class="promo-banner-content">
-                <span class="promo-banner-badge">⚽ Event Terbatas</span>
-                <h2 class="promo-banner-title">Football Fever 2026</h2>
-                <p class="promo-banner-desc">Top-up game favoritmu selama event dan dapatkan cashback instan hingga 50%! Didukung ratusan metode pembayaran aman.</p>
+        <?php if (!empty($banners)): ?>
+            <div class="banner-slider-container">
+                <div class="banner-slider-wrapper">
+                    <?php foreach ($banners as $b): ?>
+                        <div class="banner-slide <?= !empty($b['image_path']) ? 'has-image' : '' ?>">
+                            <?php if (!empty($b['image_path'])): ?>
+                                <img src="<?= APP_URL . '/' . htmlspecialchars($b['image_path']) ?>" class="banner-slide-bg" alt="<?= htmlspecialchars($b['title']) ?>">
+                                <div class="banner-slide-overlay"></div>
+                            <?php endif; ?>
+                            
+                            <div class="banner-slide-content">
+                                <span class="promo-banner-badge"><?= htmlspecialchars($b['badge_text']) ?></span>
+                                <h2 class="promo-banner-title"><?= htmlspecialchars($b['title']) ?></h2>
+                                <p class="promo-banner-desc"><?= htmlspecialchars($b['description']) ?></p>
+                                <a href="<?= htmlspecialchars($b['button_link']) ?>" class="banner-slide-btn">
+                                    <?= htmlspecialchars($b['button_text']) ?> →
+                                </a>
+                            </div>
+                            
+                            <?php if (empty($b['image_path'])): ?>
+                                <div class="banner-slide-graphic"><?= htmlspecialchars($b['graphic_icon']) ?></div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                
+                <?php if (count($banners) > 1): ?>
+                    <!-- Navigation Arrows -->
+                    <button class="banner-slider-arrow prev" aria-label="Sebelumnya">‹</button>
+                    <button class="banner-slider-arrow next" aria-label="Berikutnya">›</button>
+                    
+                    <!-- Navigation Dots -->
+                    <div class="banner-slider-dots">
+                        <?php foreach ($banners as $index => $b): ?>
+                            <span class="banner-slider-dot <?= $index === 0 ? 'active' : '' ?>" data-index="<?= $index ?>"></span>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
-            <div class="promo-banner-graphic">🏆</div>
-        </div>
+        <?php endif; ?>
 
         <!-- ===== FILTER KATEGORI ===== -->
         <div class="games-filter">
             <button class="filter-btn active" data-cat="all">Semua Produk</button>
             <button class="filter-btn" data-cat="flash-topup">Flash Top-Up</button>
             <button class="filter-btn" data-cat="voucher">Voucher</button>
-            <button class="filter-btn" data-cat="lokal">Game Lokal</button>
+
         </div>
 
         <!-- ===== TOOLBAR: SEARCH & SORT ===== -->
         <div class="catalog-toolbar">
             <div class="search-wrapper">
-                <input type="text" id="gameSearch" placeholder="Cari di GameTop...">
+                <input type="text" id="gameSearch" placeholder="Cari di <?= APP_NAME ?>...">
                 <span class="search-icon">🔍</span>
                 <button class="clear-btn" id="clearSearch" aria-label="Clear Search">✖</button>
             </div>
@@ -78,8 +111,6 @@ $games = getGames();
                     $tag = 'flash-topup';
                 } elseif ($game['category'] === 'RPG') {
                     $tag = 'voucher';
-                } elseif ($game['category'] === 'Game Lokal') {
-                    $tag = 'lokal';
                 }
                 
                 // Extra metadata for live filtering
